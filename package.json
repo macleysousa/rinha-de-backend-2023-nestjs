@@ -17,14 +17,33 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "module:create": "npx nest g module",
+    "controller:create": "npx nest g controller",
+    "service:create": "npx nest g service",
+    "crud": "npx nest g resource",
+    "typeorm:": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./ormconfig.ts",
+    "schema:log": "npm run typeorm: schema:log",
+    "migration:create": "typeorm migration:create",
+    "migration:generate": "npm run typeorm: migration:generate",
+    "migration:run": "npm run typeorm: migration:run",
+    "migration:revert": "npm run typeorm: migration:revert",
+    "migration:show": "npm run typeorm: migration:show"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/typeorm": "^10.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "mysql2": "^3.6.1",
+    "redis": "^4.6.10",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -34,6 +53,7 @@
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
+    "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.42.0",
