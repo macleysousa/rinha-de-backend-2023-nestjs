@@ -23,21 +23,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.75'
           memory: '1.5GB'
-
-  redis:
-    # Redis Cache
-    image: redis:latest
-    ports:
-      - "5555:6379"
-    expose:
-      - "5555"
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.25'
-          memory: '0.25GB'
 
   app1: &app
     build: .
@@ -55,7 +42,6 @@ services:
       - "3000"
     depends_on:
       - mysql
-      - redis
     ulimits:
       nproc: 1000000
       nofile:
@@ -84,4 +70,4 @@ services:
       resources:
         limits:
           cpus: '0.25'
-          memory: '0.25GB'
+          memory: '0.5GB'

@@ -4,4 +4,3 @@
 
 - Node + NestJs
 - MySql
-- Redis

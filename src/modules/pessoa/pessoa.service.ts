@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable, UnprocessableEntityException, NotFoundException, Inject } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
+import { CACHE_MANAGER, CacheStore } from '@nestjs/cache-manager';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { PessoaEntity } from './entities/pessoa.entity';
-import { CACHE_MANAGER, CacheStore } from '@nestjs/cache-manager';
 
 @Injectable()
 export class PessoaService {
@@ -24,7 +24,7 @@ export class PessoaService {
       throw new UnprocessableEntityException('Apelido já cadastrado');
     });
 
-    return `/pessoa/${pessoa.id}`;
+    return `/pessoas/${pessoa.id}`;
   }
 
   async find(t: string): Promise<PessoaEntity[]> {
