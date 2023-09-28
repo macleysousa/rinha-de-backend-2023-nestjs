@@ -6,7 +6,7 @@ export class PessoaEntity {
   id: string;
 
   @PrimaryColumn('varchar')
-  // @Unique(['apelido'])
+  @Unique(['apelido'])
   apelido: string;
 
   @Column('varchar')

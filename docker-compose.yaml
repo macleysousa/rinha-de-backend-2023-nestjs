@@ -5,7 +5,7 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
-      MYSQL_DATABASE: mysql
+      MYSQL_DATABASE: rinha
     ports:
       - 4444:3306
     expose:
@@ -34,19 +34,13 @@ services:
       DB_HOSTNAME: "mysql"
       DB_USERNAME: "root"
       DB_PASSWORD: "12345678"
-      DB_DATABASE: "mysql"
+      DB_DATABASE: "rinha"
       DB_PORT: 3306
       NODE_ENV: production
-      REDIS_URL: "redis://:@redis:6379"
     expose:
       - "3000"
     depends_on:
       - mysql
-    ulimits:
-      nproc: 1000000
-      nofile:
-        soft: 1000000
-        hard: 1000000
     deploy:
       resources:
         limits:

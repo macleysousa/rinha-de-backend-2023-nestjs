@@ -1,9 +1,8 @@
-import { BadRequestException, Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
-import { CACHE_MANAGER, CacheStore } from '@nestjs/cache-manager';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { PessoaEntity } from './entities/pessoa.entity';
 
@@ -11,14 +10,11 @@ import { PessoaEntity } from './entities/pessoa.entity';
 export class PessoaService {
   constructor(
     @InjectRepository(PessoaEntity)
-    private repository: Repository<PessoaEntity>,
-    @Inject(CACHE_MANAGER) private cacheManager: CacheStore
+    private repository: Repository<PessoaEntity>
   ) {}
 
   async create(pessoaDto: CreatePessoaDto): Promise<string> {
     const pessoa = this.repository.create({ ...pessoaDto, id: v4() });
-
-    await this.cacheManager.set(pessoa.apelido, pessoa, 60000);
 
     await this.repository.insert(pessoa).catch((err) => {
       throw new UnprocessableEntityException('Apelido já cadastrado');
@@ -51,10 +47,7 @@ export class PessoaService {
   }
 
   async findByApelido(apelido: string): Promise<PessoaEntity> {
-    const cache = await this.cacheManager.get<PessoaEntity>(apelido);
-    if (cache) return cache;
-
-    return this.repository.findOne({ where: { apelido }, cache: { id: apelido, milliseconds: 5000 } });
+    return this.repository.findOne({ where: { apelido } });
   }
 
   async findCount(): Promise<number> {
